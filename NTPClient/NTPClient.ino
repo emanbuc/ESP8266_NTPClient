@@ -1,7 +1,16 @@
 /*
 
- Udp NTP Client
+ ESP8266 NTPClient
+ -------------------
+ Created on 31 july 2016
  
+ Author: Emanuele Buchicchio
+ https://github.com/emanbuc/ESP8266_NTPClient
+ emanuele.buchicchio@informaticamente.it
+
+ based on "Udp NTP Client" example in ESP8266 WiFi library
+ by Ivan Grokhotkov
+
  */
 
 #include <ESP8266WiFi.h>
@@ -23,10 +32,10 @@
 //NTP server static IP Address in format 
 //IPAddress(NTP_SERVER_IP1, NTP_SERVER_IP2, NTP_SERVER_IP3, NTP_SERVER_IP4);
 //IPAddress(129, 6, 15, 28) => time.nist.gov NTP server
-#define NTP_SERVER_IP1 192
-#define NTP_SERVER_IP2 168
-#define NTP_SERVER_IP3 1
-#define NTP_SERVER_IP4 100
+#define NTP_SERVER_IP1 129
+#define NTP_SERVER_IP2 6
+#define NTP_SERVER_IP3 15
+#define NTP_SERVER_IP4 28
 #define NTP_POOLING_INTERVAL 10000000 //microseconds -> 10 sec
 #define NTP_WAIT_TIME 500000 //microseconds -->500ms 
 #define NTP_WAIT_TIMEOUT 5000000 //microseconds -->5000s 
@@ -48,9 +57,10 @@ int ntpClientState = NTP_STATE_IDLE;
 
 void setup()
 {
-  Serial.begin(115200);
-  Serial.println();
-  Serial.println();
+  Serial.begin(9600);
+  delay(100);
+  Serial.println("SERIAL CONNECTED");
+
   //print Product Info
   Serial.print("FW Name: ");
   Serial.println(FW_NAME);
@@ -106,6 +116,7 @@ void loop()
                 Serial.print("packet received, length=");
                 Serial.println(cb);
                 parseNtpResponse();
+                ntpClientNextState(NTP_STATE_IDLE);
               }
           }
         }

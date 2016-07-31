@@ -1,4 +1,4 @@
 /* ========= PRODUCT INFORMATION  =========== */
-#define FW_REVISION 02
-#define FW_NAME "UDP NTP Client"
+#define FW_REVISION 03
+#define FW_NAME "ESP8266 NTPClient"
 /* -------------------- */
